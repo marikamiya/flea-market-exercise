@@ -1,9 +1,7 @@
 package com.example.demo.Repository;
 
-import java.sql.PreparedStatement;
 import java.util.List;
 
-import javax.print.DocFlavor.READER;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -148,16 +146,17 @@ public class ListRepository {
         List<Category> childCategoryList = template.query(sql, pram, CG_ROW_MAPPER);
         return childCategoryList;
     }
+
     /**
-     *grandChildカテゴリリスト表示
+     * grandChildカテゴリリスト表示
      */
-    public List<Category> grandChildCategories(String parentCategory,String childCategory){
+    public List<Category> grandChildCategories(String parentCategory, String childCategory) {
         String sql = """
                 SELECT  *
                     FROM category g_ch_category
                     LEFT JOIN category ch_category ON g_ch_category.parent_id = ch_category.id
                     LEFT JOIN category pa_category ON ch_category.parent_id = pa_category.id
-                    WHERE pa_category.name = :parentCategory AND ch_category.name = :childCategory; 
+                    WHERE pa_category.name = :parentCategory AND ch_category.name = :childCategory;
                 """;
         SqlParameterSource pram = new MapSqlParameterSource()
                 .addValue("parentCategory", parentCategory).addValue("childCategory", childCategory);

@@ -116,7 +116,7 @@ public class ListController {
 
 
     /**
-     * ID検索
+     * 詳細ページ
      * 
      * @param id　商品id
      * @return 詳細ページ
@@ -128,8 +128,6 @@ public class ListController {
 
         return "detail";
     }
-    //childcategoryの情報を保持して表示をしてみて！
-    //詳細ページの戻る時に直前のページに戻る方法を履歴ない時にも表示するところ未完
-    //
+ 
 
 }
