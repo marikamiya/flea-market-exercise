@@ -6,6 +6,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,8 +30,9 @@ public class ItemController {
     ListController listController;
 
     @RequestMapping("")
-    public String index(){
+    public String index(Model model,AddForm form){
         List<Category> parentCategoryList = itemService.parentCategoryList();
+        model.addAttribute("addForm", form);
         session.setAttribute("parentCategoryList", parentCategoryList);
         return "add";
     }
@@ -64,12 +67,16 @@ public class ItemController {
      * アイテム追加 
      */
     @RequestMapping("add")
-    public String add(AddForm form){
+    public String add(@Validated AddForm form, BindingResult br, Model model){
+        if (br.hasErrors()) {
+            return index(model,form);
+        }
         int id = getCategoryId(form);
         Item item = new Item();
         BeanUtils.copyProperties(form, item);       
         item.setCategoryId(id);
         itemService.itemAdd(item);
+       
         return listController.list(null);
     }
     /**
@@ -91,5 +98,6 @@ public class ItemController {
     public List<Category> searchGrandChild(String parentCategory, String childCategory){
         return itemService.grandChCategories(parentCategory, childCategory);
     }
+
 
 }

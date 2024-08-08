@@ -1,13 +1,28 @@
 package com.example.demo.form;
 
+import org.springframework.validation.annotation.Validated;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+@Validated
 public class AddForm {
+    @NotNull
+    @NotBlank
     private String name;
+    @NotNull
     private Integer price;
+    @NotBlank
     private String parentCategory;
+    @NotBlank
     private String childCategory;
+    @NotBlank
     private String grandChildCategory;
+    @NotBlank
     private String brand;
+    @NotNull
     private Integer condition;
+    @NotBlank
     private String description;
 
     

@@ -1,9 +1,9 @@
 'use strict';
 
 $(function () {
-    $('#parentCategory').on('change',function () {
+    $('#childCategory').on('click', function () {
         let hostUrl = 'http://localhost:8080/list/serchChildCategory';
-        let selectedOption = $('option:selected').val();
+        let selectedOption = $('#parentCategory option:selected').val();
         $.ajax({
             url: hostUrl,
             type: 'post',
@@ -12,11 +12,16 @@ $(function () {
             async: true,
         }).done(function (data) {
             var childCategoryList = [];
+            if (data.length == 0) {
+                childCategoryList = "<option> -- childCategory -- </option>";
+                console.log(childCategoryList);
+            } else {
             for (var i = 0; i < data.length; i++) {
                 var child = "<option> " + data[i].categoryName + "</option>";
                 childCategoryList.push(child);
             }
             $('#childCategory').html(childCategoryList)
+        }
             console.log(data);
 
         })
@@ -24,7 +29,7 @@ $(function () {
 });
 
 $(function () {
-    $('#childCategory').on('change',function () {
+    $('#grandChildCategory').on('click', function () {
         let hostUrl = 'http://localhost:8080/item/searchGrandChildCategory';
         let selectedOption = $('#parentCategory option:selected').val();
         let childSelectedOption = $('#childCategory option:selected').val();
@@ -32,17 +37,24 @@ $(function () {
             url: hostUrl,
             type: 'post',
             dataType: 'json',
-            data: { parentCategory: selectedOption, 
-                    childCategory: childSelectedOption },
+            data: {
+                parentCategory: selectedOption,
+                childCategory: childSelectedOption
+            },
             async: true,
         }).done(function (data) {
             var grandChildCategoryList = [];
-            for (var i = 0; i < data.length; i++) {
-                var grandChild = "<option> " + data[i].categoryName + "</option>";
-                grandChildCategoryList.push(grandChild);
+            if (data.length == 0) {
+                grandChildCategoryList = "<option> -- grandChildCategory -- </option>";
+            } else {
+                for (var i = 0; i < data.length; i++) {
+                    var grandChild = "<option> " + data[i].categoryName + "</option>";
+                    grandChildCategoryList.push(grandChild);
+                }
             }
             $('#grandChildCategory').html(grandChildCategoryList)
             console.log(data);
+
 
         })
     });
