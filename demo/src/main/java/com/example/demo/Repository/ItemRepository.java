@@ -32,7 +32,7 @@ public class ItemRepository {
                 .addValue("categoryId", item.getCategoryId())
                 .addValue("brand", item.getBrand())
                 .addValue("condition", item.getCondition())
-                .addValue("description", item.getCondition());
+                .addValue("description", item.getDescription());
         template.update(sql, param);
 
     }
