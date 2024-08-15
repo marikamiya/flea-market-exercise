@@ -49,7 +49,8 @@ public class ListRepository {
                 FROM items i
                    INNER JOIN category c
                     ON i.category = c.id
-                    order by i.id
+                    where i.deleted_at is NULL
+                    order by i.name
                     limit 30
                     """;
         List<Item> itemList = template.query(sql, IT_ROW_MAPPER);
@@ -101,7 +102,7 @@ public class ListRepository {
                             LEFT JOIN category c1 ON i.category = c1.id
                             LEFT JOIN category c2 ON c1.parent_id = c2.id
                             LEFT JOIN category c3 ON c2.parent_id = c3.id
-                             WHERE i.name LIKE :itemName AND i.brand LIKE :brandName AND c3.name LIKE :parentCategory AND c2.name LIKE :childCategory
+                             WHERE i.name LIKE :itemName AND i.brand LIKE :brandName AND c3.name LIKE :parentCategory AND c2.name LIKE :childCategory AND i.deleted_at is null
                                 order by i.id
                     """;
         SqlParameterSource param = new MapSqlParameterSource()

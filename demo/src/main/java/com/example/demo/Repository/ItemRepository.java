@@ -82,7 +82,7 @@ public class ItemRepository {
          */
          public void itemDelete(int id){
                 String sql = """
-                                DELETE FROM items WHERE id = :id ;
+                                UPDATE items SET deleted_at = 1 WHERE id = :id ;
                                 """;
                 SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
                 template.update(sql, param);
