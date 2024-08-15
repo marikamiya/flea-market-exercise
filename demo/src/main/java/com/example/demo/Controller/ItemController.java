@@ -58,7 +58,7 @@ public class ItemController {
         Item item = new Item();
         BeanUtils.copyProperties(form, item);
         item.setCategoryId(id);
-        itemService.ietmEdit(item);
+        itemService.itemEdit(item);
         return listController.list(null);
 
     }
@@ -97,6 +97,15 @@ public class ItemController {
     @PostMapping("/searchGrandChildCategory")
     public List<Category> searchGrandChild(String parentCategory, String childCategory){
         return itemService.grandChCategories(parentCategory, childCategory);
+    }
+
+    /*
+     * アイテム削除
+     */
+    @RequestMapping("/itemDelete")
+    public String itemDelete(Integer id){
+        itemService.itemDelete(id);
+        return listController.list(null); 
     }
 
 

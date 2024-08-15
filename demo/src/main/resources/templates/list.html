@@ -112,6 +112,7 @@
             <th>category</th>
             <th>brand</th>
             <th>cond</th>
+            <th>delete</th>
           </tr>
         </thead>
         <span th:each="itemList:${session.itemPage}">
@@ -127,10 +128,16 @@
             <tr>
               <td class="item-id" th:hidden="${itemList.id}" ></td>
               <td class="item-name" ><a th:href="@{/list/detail(id=${itemList.id})}" th:text="${itemList.name}"></a></td>
-              <td class="item-price" th:text="${itemList.price}"></td>
+              <td class="item-price" th:text="${itemList.price}">1000</td>
               <td class="item-category" th:text="${itemList.category}">Beauty / Makeup / Face</td>
               <td class="item-brand" th:text="${itemList.brand}">Smashbox</td>
               <td class="item-condition" th:text="${itemList.condition}">2</td>
+              <td class="item-delete" >
+                <form th:action="@{/item/itemDelete}" method="post" style="display:inline;">
+                    <input type="hidden" name="id" th:value="${itemList.id}">
+                    <button type="submit" class="btn btn-default btn-sm">Delete</button>
+                </form>
+              </td>
             </tr>
           </tbody>
         </span>

@@ -85,8 +85,11 @@ public class ItemService {
     public int getCategoryId(String parent ,String child ,String grandChild){
         return itemRepository.getCategoryId(parent, child, grandChild);
     }
-    public void ietmEdit(Item item){
-        itemRepository.edidItem(item);
+    public void itemEdit(Item item){
+        itemRepository.editItem(item);
+    }
+    public void itemDelete(int id){
+        itemRepository.itemDelete(id);    
     }
 
 }
